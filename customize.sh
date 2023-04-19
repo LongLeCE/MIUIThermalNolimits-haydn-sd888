@@ -113,23 +113,15 @@ REPLACE="
 # set_perm /data/local/tmp/file.txt 0 0 644
 
 on_install() {
-	# mars
 	touch "${MODPATH}/.replace"
-	thermals_mars=$(find /system/vendor/etc/ -maxdepth 1 -name '*k1a*' -not -name '*thermald*' -not -name '*nolimits*')
-	ui_print "mars: replacing all thermal confs with nolimits"
-	for thermal_mars in $thermals_mars; do
-		ui_print "$thermal_mars"
-		[[ ! -d $MODPATH/${thermal_mars%/*} ]] && mkdir -p $MODPATH/${thermal_mars%/*}
-		cp /system/vendor/etc/thermal-k1a-nolimits.conf "${MODPATH}/$thermal_mars"	
-	done
 
-	# star
-	thermals_star=$(find /system/vendor/etc/ -maxdepth 1 -name 'thermal-*' -not -name '*k1a*' -not -name '*nolimits*')
-	ui_print "star: replacing all thermal confs with nolimits"
-	for thermal_star in $thermals_star; do
-		ui_print "$thermal_star"
-		[[ ! -d $MODPATH/${thermal_star%/*} ]] && mkdir -p $MODPATH/${thermal_star%/*}
-		cp /system/vendor/etc/thermal-k1a-nolimits.conf "${MODPATH}/$thermal_star"	
+	# haydn
+	thermals_haydn=$(find /system/vendor/etc/ -maxdepth 1 -name 'thermal-*' -not -name 'thermal-nolimits*')
+	ui_print "haydn: replacing all thermal confs with nolimits"
+	for thermal_haydn in $thermals_haydn; do
+		ui_print "$thermal_haydn"
+		[[ ! -d $MODPATH/${thermal_haydn%/*} ]] && mkdir -p $MODPATH/${thermal_haydn%/*}
+		cp /system/vendor/etc/thermal-nolimits.conf "${MODPATH}/$thermal_haydn"	
 	done
 
 	[[ -f /data/current ]] && rm -rf /data/current
